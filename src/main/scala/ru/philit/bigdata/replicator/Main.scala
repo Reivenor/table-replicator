@@ -1,10 +1,8 @@
 package ru.philit.bigdata.replicator
 
 import cats.effect._
-import cats.implicits._
-import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
-import doobie.hikari.HikariTransactor
 import doobie._
+import doobie.hikari.HikariTransactor
 import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
 import ru.philit.bigdata.replicator.config.{Config, DbConfig}
 import ru.philit.bigdata.replicator.db.{Reader, Writer}
