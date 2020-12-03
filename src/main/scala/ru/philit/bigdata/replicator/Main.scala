@@ -12,8 +12,8 @@ object Main extends IOApp {
 
   def makeTransactor[F[_]](config: DbConfig)(implicit F: Async[F], cs: ContextShift[F]): Resource[F, HikariTransactor[F]] =
     for {
-      ce <- ExecutionContexts.fixedThreadPool[F](32) // our connect EC
-      te <- Blocker[F]   // our transaction EC
+      ce <- ExecutionContexts.fixedThreadPool[F](10) // our connect EC
+      te <- Blocker[F] // our transaction EC
       xa <- HikariTransactor.newHikariTransactor[F](
         config.driver,
         config.url,
@@ -37,11 +37,19 @@ object Main extends IOApp {
         _ <- logger.debug("Main -> Started...")
         sourceReader <- IO.pure(new Reader(source))
         sinkWriter <- IO.pure(new Writer(sink))
-        count <- sinkWriter.persistRecords(
+        _ <- logger.debug(s"Main -> Removing outdated records from ${config.wf.targetTable}")
+        _ <- sinkWriter.clearTargetTable(config.wf.targetTable)
+        _ <- logger.debug("Main -> Starting migration")
+        res <- sinkWriter.persistRecords(
           config.wf.targetTable,
-          sourceReader.getRecords(config.wf)
+          sourceReader.getRecords(config.wf),
+          config.wf.useUpdateFunction
         )
-        _ <- logger.debug(s"Main -> Write $count records")
+        _ <- logger.debug(s"Main -> Written ${res._1} records")
+        _ <- logger.debug(
+          res._2.map( v => s"Main -> Update function finished with result $v")
+          .getOrElse("Main -> Update function disabled")
+        )
       } yield ExitCode.Success
     }
   }
