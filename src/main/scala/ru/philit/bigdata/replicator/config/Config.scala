@@ -13,7 +13,8 @@ case class WorkflowConfig(
                            targetTable: String,
                            tablePrefix: String,
                            system: String,
-                           useUpdateFunction: Boolean
+                           useUpdateFunction: Boolean,
+                           cron: String
                          )
 
 case class ServiceConfig(source: DbConfig, sink: DbConfig, wf: WorkflowConfig)

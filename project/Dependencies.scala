@@ -11,13 +11,16 @@ object Dependencies {
   val logback      = "ch.qos.logback" % "logback-classic" % "1.2.3"
   val postgresql   = "org.postgresql" % "postgresql" % "42.1.4"
 
+  val fs2Cron = "eu.timepit" %% "fs2-cron-core" % "0.2.2"
+
   val all: Seq[ModuleID] = Seq(
     pureconfig,
     doobieCore,
     doobieHikari,
     cats4j,
     logback,
-    postgresql
+    postgresql,
+    fs2Cron
   )
 
 }
