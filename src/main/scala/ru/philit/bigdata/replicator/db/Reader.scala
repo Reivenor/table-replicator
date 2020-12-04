@@ -21,9 +21,9 @@ final class Reader(tnx: HikariTransactor[IO]) {
         Record(
           system = system,
           dictTechName = tableName,
-          attrTechName = key.getOrElse("null"),
+          attrTechName = key,
           recordNum = num,
-          value = value.getOrElse("null")
+          value = value
         )
       }
 
@@ -50,7 +50,7 @@ object Reader {
                ) js_num
                join json_each_text(js_num.data) r on true
     """
-    HC.stream[(Option[String], Option[String], Int)](sql, ().pure[PreparedStatementIO], 512)
+    HC.stream[(String, Option[String], Int)](sql, ().pure[PreparedStatementIO], 512)
   }
 
 }

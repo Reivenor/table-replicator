@@ -4,21 +4,21 @@ import doobie.{Read, Write}
 
 case class Record(
                    system: String,
-                   dictName: String = "null",
+                   dictName: Option[String] = None,
                    dictTechName: String,
-                   attrName: String = "null",
+                   attrName: Option[String] = None ,
                    attrTechName: String,
                    recordNum: Int,
-                   value: String
+                   value: Option[String] = None
                  )
 
 object Record {
 
-  implicit val recordRead: Read[Record] = Read[(String, String, String, String, String, Int, String)].map {
+  implicit val recordRead: Read[Record] = Read[(String, Option[String], String, Option[String], String, Int, Option[String])].map {
     case (str, str1, str2, str3, str4, int, str5) => Record(str, str1, str2, str3, str4, int, str5)
   }
 
-  implicit val recordWrit: Write[Record] = Write[(String, String, String, String, String, Int, String)].contramap {
+  implicit val recordWrit: Write[Record] = Write[(String, Option[String], String, Option[String], String, Int, Option[String])].contramap {
     r => Record.unapply(r).get
   }
 }
