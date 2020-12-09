@@ -5,10 +5,10 @@ import java.time.LocalDateTime
 import cats.effect._
 import cron4s.Cron
 import doobie._
-import eu.timepit.fs2cron.awakeEveryCron
 import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
 import ru.philit.bigdata.replicator.config.Config
 import ru.philit.bigdata.replicator.db.{Reader, Writer}
+import ru.philit.bigdata.replicator.cron.Fs2Cron.awakeEveryCron
 
 import scala.concurrent.ExecutionContext
 

@@ -10,8 +10,9 @@ object Dependencies {
   val cats4j       = "io.chrisdavenport" %% "log4cats-slf4j" % "1.1.1"
   val logback      = "ch.qos.logback" % "logback-classic" % "1.2.3"
   val postgresql   = "org.postgresql" % "postgresql" % "42.1.4"
+  val cron4s       = "com.github.alonsodomin.cron4s" %% "cron4s-core" % "0.6.0"
 
-  val fs2Cron = "eu.timepit" %% "fs2-cron-core" % "0.2.2"
+  // val fs2Cron = "eu.timepit" %% "fs2-cron-core" % "0.2.2"
 
   val all: Seq[ModuleID] = Seq(
     pureconfig,
@@ -20,7 +21,7 @@ object Dependencies {
     cats4j,
     logback,
     postgresql,
-    fs2Cron
+    cron4s
   )
 
 }
